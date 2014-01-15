@@ -35,12 +35,11 @@ function robot(options, completeCallback){
 					var jsonData = JSON.parse(body.toString().replace(/\'/g, "\""));
 					async.eachSeries(jsonData.hps, 
 						function(item, innerCallback) {
+							// 加上encoding的目的是组织默认解码为utf8
 							iRequestObj({url:options.homepage + options.hpInfoPath.replace('{{hpId}}', item.id), encoding:null}, 
 								function(err, res, body) {
 									var hpInfoWriteAble = fs.createWriteStream(options.currentHpDir + '/' + item.id + ".json");
-									console.log(typeof body)
-							
-									logWriteAble.write(iconv.decode(body, "GBK") + '\n')
+									console.log(typeof body);	
 									hpInfoWriteAble.write(iconv.decode(body, "GBK"), function(err) {
 										if(err) throw err;											
 										console.log('wifi' + curCityId +'hp' + item.id + '热点信息保存成功');
@@ -87,16 +86,11 @@ function robot(options, completeCallback){
 							logWriteAble.write('hp' + item.id + '开始请求\n')
 							async.eachSeries(innerJsonData.hps, 
 								function(item, innerCallback2) { // 获取热点对应的详细信息
-									iRequestObj(options.homepage + options.hpInfoPath.replace('{{hpId}}', item.id), 
+									iRequestObj({url:options.homepage + options.hpInfoPath.replace('{{hpId}}', item.id), encoding:null}, 
 										function(err, res, body) {
 											logWriteAble.write('hp' + item.id + '请求中\n')
 											var hpInfoWriteAble = fs.createWriteStream(options.currentHpDir + '/' + item.id + ".json");
-											/*var buffer = new BufferHelper();
-											buffer.concat(body);
-											var buf = buffer.toBuffer();
-											logWriteAble.write(buf + '\n')
-											logWriteAble.write(iconv.decode(buf, "GBK") + '\n')*/
-											hpInfoWriteAble.end(body, function(err) {
+											hpInfoWriteAble.end(iconv.decode(body, "GBK"), function(err) {
 												logWriteAble.write('hp' + item.id + '写入文件\n')
 												if(err) {
 													logWriteAble.write("err1\n")
