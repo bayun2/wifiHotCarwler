@@ -1,0 +1,20 @@
+{
+  "name": "wifihotcrawler",
+  "description": "wifi hotpoint of crawler.",
+  "version": "1.0.0",
+  "author": {
+    "name": "rwt"
+  },
+  "private": true,
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "dependencies": {
+    "async": "~0.2.9 ",
+    "request": "~2.31.0",
+    "optimist": "~0.6.0",
+    "tar.gz": "~0.1.1",
+    "iconv-lite" : "~0.2.11 ",
+    "bufferhelper": "~0.2.0"
+  }
+}
