@@ -6,7 +6,6 @@ var iRequest = require('request');
 var targz    = require('tar.gz');
 var util     = require('util');
 var iconv    = require('iconv-lite');
-var BufferHelper = require('bufferhelper');
 
 var defaultConfig = {
 	'homepage' : 'http://wlan.vnet.cn/',
